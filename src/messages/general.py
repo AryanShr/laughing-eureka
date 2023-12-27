@@ -31,9 +31,9 @@ class CabDetails(Model):
   cab_arrival_time: int
 
 class InputPrompt(Model):
-    topic: str = Field(..., description="The topic of the poem.")
-    theme: str = Field(..., description="The theme of the poem.")
-    additional_specifications: Optional[str] = Field(None, description="Additional specifications for the poem.")
+    travelQuery: str = Field(..., description="The travel query")
+    # theme: str = Field(..., description="The theme of the poem.")
+    # additional_specifications: Optional[str] = Field(None, description="Additional specifications for the poem.")
 
 class Response(Model):
-    output: str = Field(..., description="The generated poem.")
+    output: str = Field(..., description="The travel plan")

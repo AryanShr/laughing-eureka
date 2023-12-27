@@ -25,12 +25,33 @@ output_parser = CommaSeparatedListOutputParser()
 format_instructions = output_parser.get_format_instructions()
 prompt = PromptTemplate(
     template="""
-    You are an expert of literature and can write beautiful poems on demand.\n
-    You are asked to write a poem about {topic} with the theme of {theme}.\n
-    {format_instructions}
+    Travel Plan Prompt:
+    {{
+    "request": "You are a expert of travel plans and can provide best travel plans to user wishes.\n
+    A user has put his query as {travelQuery}.Include details such as the place name, location, start date time, and end datetime for each destination only",
+    "output_format": "JSON",
+    "json_format": true
+    }}
+    Sample travelQuery = "I am new to mumbai, suggest me a travel plan this weekend"
+    Sample output:
+    {{
+     "travel_plan": [
+    {{
+      "place_name": "Gateway of India",
+      "location": "Apollo Bandar, Colaba, Mumbai, Maharashtra 400001, India",
+      "start_time": "2023-12-30T09:00:00+05:30",
+      "end_time": "2023-12-30T11:00:00+05:30"
+    }},
+    {{
+      "place_name": "Juhu Beach",
+      "location": "Juhu, Mumbai, Maharashtra, India",
+      "start_time": "2023-12-30T13:00:00+05:30",
+      "end_time": "2023-12-30T15:00:00+05:30"
+    }}
+    ]
+    }}
     """,
-    input_variables=["topic", "theme"],
-    partial_variables={"format_instructions": format_instructions}
+    input_variables=["travelQuery"],
 )
 modelName = "gpt-3.5-turbo"
 llm = ChatOpenAI(temperature=0.1, openai_api_key=os.getenv("OPENAI_API_KEY"), model_name=modelName)
@@ -40,14 +61,18 @@ chain = prompt|llm|op
 @OpenAIAgent.on_event("startup")
 async def say_hello(ctx:Context):
     ctx.logger.info(f"Hello from OpenAI! {ctx.name}")
+
 open_ai_protocol = Protocol("OpenAI")
+
+
 @open_ai_protocol.on_message(model=InputPrompt, replies=Response)
 async def respond_to_prompt(ctx:Context, sender: str, msg: InputPrompt):
     ctx.logger.info(f"Received prompt from {sender}: {msg}")
-    additional_specifications = f"Try to include these words in your poem: {msg.additional_specifications}.\n" if msg.additional_specifications else ""
-    # _input = prompt.format(topic=msg.topic, theme=msg.theme, format_instructions=additional_specifications)
+    # additional_specifications = f"Try to include these words in your poem: {msg.additional_specifications}.\n" if msg.additional_specifications else ""
+    # _input = prompt.format(travelQuery=msg.travelQuery, theme=msg.theme, format_instructions=additional_specifications)
     try:
-        output = chain.invoke({"topic":msg.topic, "theme":msg.theme, "format_instructions":additional_specifications})
+        ctx.logger.info(f"Generated output: {msg}")
+        output = chain.invoke({"travelQuery":msg.travelQuery})
         # output = "Hello"
         ctx.logger.info(f"Generated output: {output}")
         await ctx.send(
