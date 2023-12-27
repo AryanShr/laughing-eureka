@@ -5,14 +5,14 @@ api_key = 'AIzaSyDiB8cANSb9SnlY94TEA-y7NvLWOW3_Jdw'
 # addr_from = address_from.replace(' ', '+')
 # formatted_addr_to = address_to.replace(' ', '+')
 # Geocoding API request with start address
-geocode_from = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address=margao&sensor=false&key=AIzaSyDiB8cANSb9SnlY94TEA-y7NvLWOW3_Jdw').json()
+geocode_from = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address=panvel&sensor=false&key=AIzaSyDiB8cANSb9SnlY94TEA-y7NvLWOW3_Jdw').json()
 if 'error_message' in geocode_from:
     print(geocode_from['error_message'])
 if 'results' not in geocode_from or len(geocode_from['results']) == 0:
     print('No geocoding results found for the starting address')
 
 # Geocoding API request with end address
-geocode_to = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address=panjim&sensor=false&key=AIzaSyDiB8cANSb9SnlY94TEA-y7NvLWOW3_Jdw').json()
+geocode_to = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address=powai&sensor=false&key=AIzaSyDiB8cANSb9SnlY94TEA-y7NvLWOW3_Jdw').json()
 if 'error_message' in geocode_to:
     print(geocode_to['error_message'])
 
