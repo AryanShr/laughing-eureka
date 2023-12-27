@@ -2,6 +2,8 @@ import openai
 import time
 from typing import List
 import os
+from dotenv import load_dotenv
+load_dotenv()
  
  
 class OpenAILLM:
@@ -62,13 +64,15 @@ class OpenAILLM:
     except Exception as err:
         print("openai_call Exception: ", err)
         print("Retry...")
-        time.sleep(2)
+        raise err
+        # time.sleep(2)
         return await self.complete(header, prompt, complete, temperature, max_tokens, stop)
  
  
 def get_llm():
-    # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-    OPENAI_API_KEY = "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"
+    
+    # print(f"{os.getenv('OPENAI_API_KEY', '')}")
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
     if len(OPENAI_API_KEY) > 0:
         openai.api_key = OPENAI_API_KEY
     return OpenAILLM(completion_model="gpt-3.5-turbo")
