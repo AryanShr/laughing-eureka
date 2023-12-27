@@ -1,27 +1,29 @@
-from uagents import Agent, Context, Protocol
+from uagents import Agent, Context, Protocol, Bureau
 from uagents.setup import fund_agent_if_low
 from messages import Cab, UAgentResponse, UAgentResponseType, CabSelection
 import requests
 import os
 import uuid
+from agents.cab_booking.cabs.cab_protocol import cab_protocol
 
 CAB_BOOKING_SEED = os.environ.get('CAB_BOOKING_SEED', 'No one can guess me :)')
 # uber developers
 
 
-agent = Agent('cab_booking', seed=CAB_BOOKING_SEED)
+agent = Agent('cab_booking', seed=CAB_BOOKING_SEED, endpoint=["http://127.0.0.1:8002/submit"])
 
 fund_agent_if_low(agent.wallet.address())
 
 @agent.on_event("startup")
 async def startup(ctx: Context):
     ctx.logger.info("Cab booking agent started")
-    await ctx.experimental_broadcast("CabBooking",Cab(distance_from_source=10, time_to_destination=20))
+    await ctx.experimental_broadcast(cab_protocol.digest,Cab(distance_from_source=10, distance_for_travel=20))
 
 @agent.on_message(model=CabSelection)
 async def cab_selection(ctx: Context, sender: str, msg: CabSelection):
     ctx.logger.info(f"Received message from {sender}, session: {ctx.session}")
     ctx.logger.info(f"{msg}")
+
 
 
 # cab_protocol = Protocol("CabBooking")
@@ -51,4 +53,7 @@ async def cab_selection(ctx: Context, sender: str, msg: CabSelection):
 # agent.include(cab_protocol)
 
 if __name__ == "__main__":
-    agent.run()
+    bureau = Bureau(endpoint="http://127.0.0.1:8002/submit",port=8002)
+    print(f"Adding agent {agent.address} to bureau")
+    bureau.add(agent)
+    bureau.run()
