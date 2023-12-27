@@ -17,7 +17,10 @@ fund_agent_if_low(agent.wallet.address())
 @agent.on_event("startup")
 async def startup(ctx: Context):
     ctx.logger.info("Cab booking agent started")
-    await ctx.experimental_broadcast(cab_protocol.digest,Cab(distance_from_source=10, distance_for_travel=20))
+    # await ctx.send("agent1q24wv58qcmxe5t2pr5auyzzm6ahh94ck4dd00s7e0sfc4td2jtkdgtprj9f",Cab(distance_from_source=10, distance_for_travel=20))
+    await ctx.send("agent1q0pnrp5ahn3stfyuf3s0ym5euuurl3w4ztu60af5v8qv6cndktynqrr99kc",Cab(distance_from_source=10, distance_for_travel=20))
+    await ctx.send("agent1qgg4jvaj3a3xtde3wc2gkvqwl43mflt9awnr9za6huu44x80sx7fu2mwz2q",Cab(distance_from_source=10, distance_for_travel=20))
+    await ctx.send("agent1qdax9c520nn457edq0q9meumn3ng98pra0840fdqsjpjrarm6p4qvf6ne9g",Cab(distance_from_source=10, distance_for_travel=20))
 
 @agent.on_message(model=CabSelection)
 async def cab_selection(ctx: Context, sender: str, msg: CabSelection):
