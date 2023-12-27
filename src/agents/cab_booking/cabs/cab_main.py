@@ -18,6 +18,4 @@ async def send_state(ctx: Context, sender: str, msg: Cab):
 
 agent.include(cab_protocol)
 
-if __name__ == "__main__":
-    agent.run()
 

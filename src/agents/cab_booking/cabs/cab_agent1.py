@@ -31,6 +31,3 @@ async def send_state(ctx: Context, sender: str, msg: Cab):
     await ctx.send(sender,CabSelection(is_available=ctx.storage.get("is_available"),fare=fare,arrival_time=time))
 
 agent1.include(cab_protocol)
-
-if __name__ == "__main__":
-    agent1.run()
