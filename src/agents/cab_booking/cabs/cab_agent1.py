@@ -21,13 +21,14 @@ fund_agent_if_low(agent.wallet.address())
 @agent.on_event("startup")
 async def startup(ctx: Context):
     ctx.logger.info("Cab Agent Started")
+    ctx.storage.set("is_available",False)
 
 
 @cab_protocol.on_message(model=Cab)
 async def send_state(ctx: Context, sender: str, msg: Cab):
     ctx.logger.info(f"Received message from {sender}, session: {ctx.session}")
     fare,time = faretimeCalc(msg.distance_for_travel,msg.distance_from_source)
-    await ctx.send(sender,CabSelection(is_available=is_available,fare=fare,arrival_time=time))
+    await ctx.send(sender,CabSelection(is_available=ctx.storage.get("is_available"),fare=fare,arrival_time=time))
 
 agent.include(cab_protocol)
 
