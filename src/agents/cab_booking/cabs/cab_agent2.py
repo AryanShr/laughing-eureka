@@ -5,9 +5,10 @@ import requests
 import os
 import uuid
 from agents.cab_booking.cabs.cab_protocol import cab_protocol
-CAB_DRIVER_SEED = os.environ.get('CAB_DRIVER_SEED', 'No one can guess me 1 :)')
+
+CAB_DRIVER_SEED = os.environ.get('CAB_DRIVER_SEED 2', 'No one can guess me 1 :)')
 # uber developers
-agent = Agent('cab_booking', seed=CAB_DRIVER_SEED)
+agent = Agent('cab_booking 2', seed=CAB_DRIVER_SEED)
 
 def faretimeCalc(Travel_distance,User_Distance):
     fare = 0.35*Travel_distance
