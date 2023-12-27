@@ -14,7 +14,7 @@ open_ai_client = Agent(
 
 fund_agent_if_low(open_ai_client.wallet.address())
 
-open_ai_req = InputPrompt(topic="The meaning of life", theme="The meaning of life", additional_specifications="3 stanzas")
+open_ai_req = InputPrompt(travelQuery="I am new to Delhi, suggest me a travel plan this weekend")
 
 @open_ai_client.on_event("startup")
 async def say_hello(ctx:Context):
@@ -24,6 +24,7 @@ async def say_hello(ctx:Context):
 @open_ai_client.on_message(model=Response)
 async def respond_to_prompt(ctx:Context, sender: str, msg: Response):
     ctx.logger.info(f"Received response from {sender}: {msg}")
+    
     ctx.logger.info(f"Generated output: {msg.output}")
 
 if __name__ == "__main__":
