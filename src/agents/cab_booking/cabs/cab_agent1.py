@@ -9,16 +9,16 @@ from agents.cab_booking.cabs.cab_protocol import cab_protocol
 CAB_DRIVER_SEED = os.environ.get('CAB_DRIVER_SEED', 'No one can guess me 2 :)')
 is_available = False
 # uber developers
-agent = Agent('cab_booking', seed=CAB_DRIVER_SEED)
+agent1 = Agent('cab_booking', seed=CAB_DRIVER_SEED)
 
 def faretimeCalc(Travel_distance,User_Distance):
     fare = 0.45*Travel_distance
     time =  40*User_Distance
     return fare,time 
 
-fund_agent_if_low(agent.wallet.address())
+fund_agent_if_low(agent1.wallet.address())
 
-@agent.on_event("startup")
+@agent1.on_event("startup")
 async def startup(ctx: Context):
     ctx.logger.info("Cab Agent Started")
     ctx.storage.set("is_available",False)
@@ -30,7 +30,7 @@ async def send_state(ctx: Context, sender: str, msg: Cab):
     fare,time = faretimeCalc(msg.distance_for_travel,msg.distance_from_source)
     await ctx.send(sender,CabSelection(is_available=ctx.storage.get("is_available"),fare=fare,arrival_time=time))
 
-agent.include(cab_protocol)
+agent1.include(cab_protocol)
 
 if __name__ == "__main__":
-    agent.run()
+    agent1.run()
