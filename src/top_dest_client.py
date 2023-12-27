@@ -1,4 +1,4 @@
-from src.messages import TopDestinations, UAgentResponse
+from messages import TopDestinations, UAgentResponse
 from uagents import Agent, Context
 from uagents.setup import fund_agent_if_low
 import os

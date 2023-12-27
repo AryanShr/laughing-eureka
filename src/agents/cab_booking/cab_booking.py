@@ -15,6 +15,9 @@ fund_agent_if_low(agent.wallet.address())
 async def startup(ctx: Context):
     ctx.logger.info("Cab booking agent started")
 
+cab_protocol = protocol("CabBooking")
+
+
 
 
 
