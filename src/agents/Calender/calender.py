@@ -1,7 +1,7 @@
 from typing import List
 from uagents import Agent, Context, Model, Protocol
 from uagents.setup import fund_agent_if_low
-import calenderFunctions.calender as c
+import agents.Calender.calenderFunctions.calender as c
 
 SUCCESS = 1
 FAILURE = -1
@@ -46,20 +46,20 @@ agent = Agent(
 agent.include(calender_proto)
 
 
-@agent.on_event("startup")
-async def book_event(ctx: Context):
+# @agent.on_event("startup")
+# async def book_event(ctx: Context):
 
-    start_date_time = '2023-12-28T09:13:00+05:30'
-    end_date_time = '2023-12-28T10:14:00+05:30'
-    title = 'Fetch AI winning celeberation'
-    location = 'Mumbai IIT Bombay'
-    print('starting')
-    await ctx.send(agent.address,BookEventRequest(
-        title=title,
-        start_date_time=start_date_time,
-        end_date_time=end_date_time,
-        location=location
-    ))
+#     start_date_time = '2023-12-28T09:13:00+05:30'
+#     end_date_time = '2023-12-28T10:14:00+05:30'
+#     title = 'Fetch AI winning celeberation'
+#     location = 'Mumbai IIT Bombay'
+#     print('starting')
+#     await ctx.send(agent.address,BookEventRequest(
+#         title=title,
+#         start_date_time=start_date_time,
+#         end_date_time=end_date_time,
+#         location=location
+#     ))
 
 
 

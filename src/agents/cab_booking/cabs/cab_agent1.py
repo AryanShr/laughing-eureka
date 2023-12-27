@@ -28,6 +28,6 @@ async def startup(ctx: Context):
 async def send_state(ctx: Context, sender: str, msg: Cab):
     ctx.logger.info(f"Received message from {sender}, session: {ctx.session}")
     fare,time = faretimeCalc(msg.distance_for_travel,msg.distance_from_source)
-    await ctx.send(sender,CabSelection(is_available=ctx.storage.get("is_available"),fare=fare,arrival_time=time))
+    await ctx.send(sender,CabSelection(Name=agent1.address,is_available=ctx.storage.get("is_available"),fare=fare,arrival_time=time))
 
 agent1.include(cab_protocol)

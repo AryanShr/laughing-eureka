@@ -1,6 +1,7 @@
 from uagents import Model
 from enum import Enum
 from typing import Optional, List
+from pydantic import Field
  
 class UAgentResponseType(Enum):
   ERROR = "error"
@@ -23,3 +24,16 @@ class BookingRequest(Model):
   user_response: str
   user_email: str
   user_full_name: str
+
+class CabDetails(Model):
+  cab_name: str
+  cab_fare: int
+  cab_arrival_time: int
+
+class InputPrompt(Model):
+    topic: str = Field(..., description="The topic of the poem.")
+    theme: str = Field(..., description="The theme of the poem.")
+    additional_specifications: Optional[str] = Field(None, description="Additional specifications for the poem.")
+
+class Response(Model):
+    output: str = Field(..., description="The generated poem.")
