@@ -59,12 +59,6 @@ class OpenAILLM:
           if self.usage_counter:
             await self.usage_counter.add_completion_usage(response.usage)
           return response.choices[0].message.content.strip()
-    # except openai.InvalidRequestError as err:
-    #   print("openai_call InvalidRequestError: ", err)
-    #   print("\n\n§§§§§§§§§§§§§§§§§§§§§§§§§§§§PROMPT§§§§§§§§§§§§§§§§§§§§§§§§§§§§")
-    #   print(prompt)
-    #   print("§§§§§§§§§§§§§§§§§§§§§§§§§§§§\n\n")
-    #   raise err
     except Exception as err:
         print("openai_call Exception: ", err)
         print("Retry...")
@@ -73,7 +67,8 @@ class OpenAILLM:
  
  
 def get_llm():
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+    # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+    OPENAI_API_KEY = "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"
     if len(OPENAI_API_KEY) > 0:
         openai.api_key = OPENAI_API_KEY
     return OpenAILLM(completion_model="gpt-3.5-turbo")

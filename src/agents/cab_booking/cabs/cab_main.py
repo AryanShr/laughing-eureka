@@ -10,9 +10,6 @@ agent = Agent('cab_booking', seed=CAB_MAIN_SEED)
 
 fund_agent_if_low(agent.wallet.address())
 
-@agent.on_event("startup")
-async def startup(ctx: Context):
-    ctx.logger.info("Cab Main Started")
 
 @cab_protocol.on_message(model=Cab)
 async def send_state(ctx: Context, sender: str, msg: Cab):
