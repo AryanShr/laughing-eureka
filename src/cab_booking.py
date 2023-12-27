@@ -8,7 +8,12 @@ from agents.cab_booking.cabs.cab_protocol import cab_protocol
 
 CAB_BOOKING_SEED = os.environ.get('CAB_BOOKING_SEED', 'No one can guess me :)')
 # uber developers
-
+def bestBook(is_available,fare,arrival_time):
+    if(is_available):
+        prio = 0.2*fare + 0.5*arrival_time
+        return prio
+    else:
+        return 99999
 
 agent = Agent('cab_booking', seed=CAB_BOOKING_SEED, endpoint=["http://127.0.0.1:8002/submit"])
 
