@@ -1,7 +1,7 @@
 from uagents import Agent, Context, Protocol
-from TopDestinations.messages import TopDestinations, UAgentResponse, UAgentResponseType, KeyValue
+from messages import TopDestinations, UAgentResponse, UAgentResponseType, KeyValue
 from uagents.setup import fund_agent_if_low
-from TopDestinations.utils.llm import get_llm
+from utils.llm import get_llm
 import os
  
 TOP_DESTINATIONS_SEED = os.getenv("TOP_DESTINATIONS_SEED", "top_destinations really secret phrase :)")
