@@ -23,11 +23,12 @@ async def startup(ctx: Context):
 
 cab_protocol = Protocol("CabAgent")
 
-@cab_protocol.on_message(model=Cab, replies={UAgentResponse})
+@cab_protocol.on_message(model=Cab)
 async def send_state(ctx: Context, sender: str, msg: Cab):
     ctx.logger.info(f"Received message from {sender}, session: {ctx.session}")
+    fare,time = faretimeCalc(msg.distance_from_source,msg.distance_for_travel)
+    await ctx.send(sender,CabSelection(is_available=is_available,fare=fare,arrival_time=time))
     # This is just example for 5 cab options\
-
 agent.include(cab_protocol)
 
 if __name__ == "__main__":
